@@ -1,16 +1,19 @@
 const express = require('express');
-const app = express();
+
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
+const cors = require("cors")
 //const dotenv =require("dotenv")
 
 //configure the environment
 // dotenv.config();
 // const PORT =process.env.PORT
-const PORT = 9000
+const PORT = 9090
 //middleware
+const app = express();
 app.use(express.json())
+app.use(cors());
 
 
 //MongoDB Connection Setup
@@ -157,6 +160,8 @@ app.get('/products', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
 
 // Start the server
 app.listen(PORT, () => {
