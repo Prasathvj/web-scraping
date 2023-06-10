@@ -66,34 +66,34 @@ const scrapeFlipkart =async()=>{
 }
 
 // Scrape Amazon
-// const scrapeAmazon = async()=>{
-//   try {
-//       const url ='https://www.amazon.in/s?i=electronics&rh=n%3A65320318031&fs=true&page=2&qid=1686295107&ref=sr_pg_2'
-//       const response = await axios.get(url)
-//       const $ = cheerio.load(response.data)
+const scrapeAmazon = async()=>{
+  try {
+      const url ='https://www.amazon.in/s?i=electronics&rh=n%3A65320318031&fs=true&page=2&qid=1686295107&ref=sr_pg_2'
+      const response = await axios.get(url)
+      const $ = cheerio.load(response.data)
 
-//       const products = [];
+      const products = [];
       
-//       $('div.a-section.a-spacing-base').each((idx,ele)=>{
-//           //const id = idx+1
-//           const image = $(ele).find('.s-image').attr('src');
-//           const title = $(ele).find('.a-size-base-plus.a-color-base.a-text-normal').text();
-//           const rating = $(ele).find('span[aria-label]').attr('aria-label')
-//           const price = $(ele).find('.a-price-whole').text();
-//           const priceElement =$(ele).find('span.a-price.a-text-price[data-a-size="b"][data-a-strike="true"][data-a-color="secondary"]');
-//           const discountPrice = priceElement.find('span.a-offscreen').text();  
-//           const offer = $(ele).find('span.a-letter-space').next().text();
+      $('div.a-section.a-spacing-base').each((idx,ele)=>{
+          //const id = idx+1
+          const image = $(ele).find('.s-image').attr('src');
+          const title = $(ele).find('.a-size-base-plus.a-color-base.a-text-normal').text();
+          const rating = $(ele).find('span[aria-label]').attr('aria-label')
+          const price = $(ele).find('.a-price-whole').text();
+          const priceElement =$(ele).find('span.a-price.a-text-price[data-a-size="b"][data-a-strike="true"][data-a-color="secondary"]');
+          const discountPrice = priceElement.find('span.a-offscreen').text();  
+          const offer = $(ele).find('span.a-letter-space').next().text();
           
-//          products.push({source :'Amazon', image, title, rating, price, discountPrice,offer})
+         products.push({source :'Amazon', image, title, rating, price, discountPrice,offer})
           
-//       })
-//       await Product.insertMany(products);
-//       //console.log(products);
-//       console.log('Amazon data scraped and saved to the database.');
-//   } catch (error) {
-//       console.log("Error scraping Amazon:", error)
-//   }
-// };
+      })
+      await Product.insertMany(products);
+      //console.log(products);
+      console.log('Amazon data scraped and saved to the database.');
+  } catch (error) {
+      console.log("Error scraping Amazon:", error)
+  }
+};
 
 // Scrape Snapdeal
 // const scrapeSnapdeal = async () => {
@@ -124,7 +124,7 @@ const scrapeFlipkart =async()=>{
 // Run all scraping functions simultaneously
   async function runScraping (){
   try {
-    await Promise.all([scrapeFlipkart()]);
+    await Promise.all([scrapeFlipkart(), scrapeAmazon()]);
     console.log('Scraping completed.');
   } catch (error) {
     console.log('Error running scraping:', error);
