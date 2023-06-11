@@ -57,7 +57,8 @@ const scrapeFlipkart =async()=>{
           const price = $(ele).find('._30jeq3._1_WHN1').text().trim();
           const discountPrice = $(ele).find('._3I9_wc._27UcVY').text().trim();
           const offer = $(ele).find('._3Ay6Sb').text().trim();
-          const productlink = $(ele).find('a').attr('href')
+          const urll = 'https://www.flipkart.com'
+          const productlink =urll + $(ele).find('a').attr('href')
          
           products.push({source:'flipkart',image, title, rating, price, discountPrice, offer, productlink})
       })
@@ -88,7 +89,8 @@ const scrapeAmazon = async()=>{
           const priceElement =$(ele).find('span.a-price.a-text-price[data-a-size="b"][data-a-strike="true"][data-a-color="secondary"]');
           const discountPrice = priceElement.find('span.a-offscreen').text();  
           const offer = $(ele).find('span.a-letter-space').next().text();
-          const productlink = $(ele).find('a').attr('href');
+          const urll ='https://www.amazon.in'
+          const productlink =urll + $(ele).find('a').attr('href');
 
          products.push({source :'Amazon', image, title, rating, price, discountPrice,offer, productlink})
           
